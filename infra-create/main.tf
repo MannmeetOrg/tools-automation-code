@@ -3,7 +3,20 @@ resource "aws_instance" "tool" {
   instance_type           = var.instance_type
   vpc_security_group_ids  = aws_security_group.infra-sg.id
 }
-
+resource "aws_route53_record" "public_record" {
+  zone_id = var.hosted_zone_id
+  name    = var.name
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.tool.public_ip]
+}
+resource "aws_route53_record" "private_record" {
+  zone_id = var.hosted_zone_id
+  name    = var.name
+  type    = "A"
+  ttl     = 10
+  records = [aws_instance.tool.private_ip]
+}
 resource "aws_security_group" "infra-sg" {
   name        = "${var.name}-sg"
   description = "${var.name}-sg"

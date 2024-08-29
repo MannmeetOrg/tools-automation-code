@@ -9,7 +9,7 @@ variable "tools" {
         ports = {}
         volume_size = 20
       }
-     vault = {
+      vault = {
         instance_type = "t3.small"
         policy_name = []
         ports = {
@@ -28,6 +28,6 @@ variable "tools" {
 }
 
 variable "hosted_zone_id" {
-  default = {}
+  default = ["Z09000053CJWX9M5OOWSV"]
 }
 variable "vpc_id" {}
