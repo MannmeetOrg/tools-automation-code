@@ -1,0 +1,103 @@
+---
+- name: Setup Prompt
+  ansible.builtin.shell: set-prompt workstation
+
+- name: Install Terraform
+  ansible.builtin.dnf:
+    name: terraform
+    state: latest
+
+- name: Install Ansible
+  ansible.builtin.shell: pip-3.11 install ansible
+
+- name: Install Docker and Kubernetes on workstation
+  become: yes
+  vars:
+    kubernetes_version: "1.26.1"
+
+  tasks:
+    - name: Update system packages
+      dnf:
+        name: '*'
+        state: latest
+
+    - name: Install required packages for Docker
+      dnf:
+        name:
+          - dnf-plugins-core
+        state: present
+
+    - name: Add Docker repository
+      dnf_repository:
+        name: docker
+        description: Docker CE Repository
+        baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable/
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/rhel/gpg
+        enabled: yes
+
+    - name: Install Docker Engine
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Ensure Docker service is started and enabled
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install required packages for Kubernetes
+      dnf:
+        name:
+          - dnf-plugins-core
+        state: present
+
+    - name: Add Kubernetes repository
+      dnf_repository:
+        name: kubernetes
+        description: Kubernetes Repository
+        baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        gpgcheck: yes
+        gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+        enabled: yes
+
+    - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
+      dnf:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+    - name: Ensure kubelet service is started and enabled
+      systemd:
+        name: kubelet
+        state: started
+        enabled: yes
+
+    - name: Initialize Kubernetes master (only for the first node)
+      command: kubeadm init --kubernetes-version={{ kubernetes_version }}
+      when: inventory_hostname in groups['master']
+      register: init_result
+      changed_when: "'kubeadm init' in init_result.stdout"
+
+    - name: Set up kubeconfig for the user (only for the first node)
+      become_user: "{{ ansible_user }}"
+      command: |
+        mkdir -p /home/{{ ansible_user }}/.kube
+        cp /etc/kubernetes/admin.conf /home/{{ ansible_user }}/.kube/config
+        chown {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/.kube/config
+      when: inventory_hostname in groups['master']
+
+    - name: Install CNI plugins (only for the first node)
+      become_user: "{{ ansible_user }}"
+      command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+      when: inventory_hostname in groups['master']
+
+#  - name: Join worker nodes to the Kubernetes cluster
+#    command: kubeadm join {{ hostvars[groups['master'][0]]['ansible_default_ipv4']['address'] }}:6443 --token {{ hostvars[groups['master'][0]]['kubeadm_token'] }} --discovery-token-ca-cert-hash sha256:{{ hostvars[groups['master'][0]]['ca_cert_hash'] }}
+#    when: inventory_hostname in groups['worker']
