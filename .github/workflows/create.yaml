@@ -6,7 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Terraform Init
-        TF_LOG: DEBUG
         run: terraform init
       - name: Terraform Apply
         run: terraform apply -auto-approve
