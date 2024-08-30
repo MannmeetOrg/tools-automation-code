@@ -33,3 +33,5 @@ variable "hosted_zone_id" {
 variable "vpc_id" {
   default = {}
 }
+variable "AWS_ACCESS_KEY_ID" {}
+variable "AWS_SECRET_ACCESS_KEY" {}
