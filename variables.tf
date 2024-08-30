@@ -1,5 +1,5 @@
 variable "tools" {
-  default = [{
+  default = {
     github_runner = {
       instance_type = "t3.small"
       policy_name   = ["AdministratorAccess"]
@@ -21,7 +21,6 @@ variable "tools" {
       volume_size    = 20
     }
     }
-  ]
 }
 
 variable "hosted_zone_id" {
