@@ -1,10 +1,10 @@
 variable "tools" {
-  type = map(object({
-    instance_type  = string
-    policy_name    = list(string)
-    ports          = map(number)  # Assuming ports are a map with port names as keys and port numbers as values
-    volume_size    = number
-  }))
+#   type = map(object({
+#     instance_type  = string
+#     policy_name    = list(string)
+#     ports          = map(number)  # Assuming ports are a map with port names as keys and port numbers as values
+#     volume_size    = number
+#   }))
   default =
     {
     github_runner = {
