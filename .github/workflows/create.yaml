@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Terraform Init
-        run: terraform init -backend-config=tfstate.tf
+        run: terraform init -backend-config=infra.create/data.tf
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
