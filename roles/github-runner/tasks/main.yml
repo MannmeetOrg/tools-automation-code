@@ -36,7 +36,7 @@
   vars:
     github_org: MannmeetOrg
     runner_name: "self-hosted-runner"
-    github_token: token_github
+    github_token: $ {{ secrets.TOKEN_GITHUB }}
     runner_version: "2.307.1"
 
   tasks:
@@ -67,22 +67,22 @@
         remote_src: yes
 
     - name: Create runner service
-        copy:
-          dest: "/etc/systemd/system/actions.runner.service"
-          content: |
-            [Unit]
-            Description=GitHub Actions Runner
-            After=network.target
-            
-            [Service]
-            WorkingDirectory=/home/runner/actions-runner
-            ExecStart=/home/runner/actions-runner/runsvc.sh
-            User=runner
-            Restart=always
-            RestartSec=10
-            
-            [Install]
-            WantedBy=multi-user.target
+      copy:
+        dest: "/etc/systemd/system/actions.runner.service"
+        content: |
+          [Unit]
+          Description=GitHub Actions Runner
+          After=network.target
+          
+          [Service]
+          WorkingDirectory=/home/runner/actions-runner
+          ExecStart=/home/runner/actions-runner/runsvc.sh
+          User=runner
+          Restart=always
+          RestartSec=10
+          
+          [Install]
+          WantedBy=multi-user.target
 
     - name: Register GitHub Actions runner
       command: >

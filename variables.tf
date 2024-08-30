@@ -30,4 +30,6 @@ variable "tools" {
 variable "hosted_zone_id" {
   default = ["Z09000053CJWX9M5OOWSV"]
 }
-variable "vpc_id" {}
+variable "vpc_id" {
+  default = {}
+}
