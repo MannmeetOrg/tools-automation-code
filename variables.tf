@@ -1,11 +1,5 @@
 variable "tools" {
-#   type = map(object({
-#     instance_type  = string
-#     policy_name    = list(string)
-#     ports          = map(number)  # Assuming ports are a map with port names as keys and port numbers as values
-#     volume_size    = number
-#   }))
-  default =
+  default = [
     {
     github_runner = {
       instance_type = "t3.small"
@@ -28,6 +22,7 @@ variable "tools" {
       volume_size    = 20
     }
     }
+  ]
 }
 
 variable "hosted_zone_id" {
@@ -36,6 +31,12 @@ variable "hosted_zone_id" {
 variable "vpc_id" {
   default = {}
 }
-variable "AWS_ACCESS_KEY_ID" {}
-variable "AWS_SECRET_ACCESS_KEY" {}
+# variable "AWS_ACCESS_KEY_ID" {}
+# variable "AWS_SECRET_ACCESS_KEY" {}
 
+#   type = map(object({
+#     instance_type  = string
+#     policy_name    = list(string)
+#     ports          = map(number)  # Assuming ports are a map with port names as keys and port numbers as values
+#     volume_size    = number
+#   }))
