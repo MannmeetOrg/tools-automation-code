@@ -92,12 +92,17 @@
     enabled: yes
 
 - name: Clean YUM cache
-  ansible.builtin.shell: yum clean all
-  become: true
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+    validate_certs: yes
 
 - name: Rebuild YUM cache
-  ansible.builtin.shell: yum makecache
-  become: true
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
 
 - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
   ansible.builtin.dnf:
@@ -106,13 +111,13 @@
       - kubeadm
       - kubectl
     state: present
-  become: true
 
 - name: Ensure kubelet service is started and enabled
-  systemd:
+  ansible.builtin.systemd:
     name: kubelet
     state: started
     enabled: yes
+
 
 #- name: Initialize Kubernetes master (only for the first node)
 #  command: kubeadm init --kubernetes-version={{ kubernetes_version }}
