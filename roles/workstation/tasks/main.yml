@@ -14,7 +14,6 @@
   become: yes
   vars:
     kubernetes_version: "1.26.1"
-
   tasks:
     - name: Update system packages
       dnf:
