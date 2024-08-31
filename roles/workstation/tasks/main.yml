@@ -29,29 +29,29 @@
     state: latest
   become: true
 
-- name: Install Ansible
-  ansible.builtin.shell: pip-3.11 install ansible
-
-
-- name: Update system packages
-  ansible.builtin.dnf:
-    name: '*'
-    state: latest
-
-- name: Install required packages for Docker
-  ansible.builtin.dnf:
-    name:
-      - dnf-plugins-core
-    state: present
-
-- name: Add Docker repository
-  ansible.builtin.yum_repository:
-    name: docker
-    description: Docker CE Repository
-    baseurl: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
-    gpgcheck: yes
-    gpgkey: https://download.docker.com/linux/rhel/gpg
-    enabled: yes
+#- name: Install Ansible
+#  ansible.builtin.shell: pip-3.11 install ansible
+#
+#
+#- name: Update system packages
+#  ansible.builtin.dnf:
+#    name: '*'
+#    state: latest
+#
+#- name: Install required packages for Docker
+#  ansible.builtin.dnf:
+#    name:
+#      - dnf-plugins-core
+#    state: present
+#
+#- name: Add Docker repository
+#  ansible.builtin.yum_repository:
+#    name: docker
+#    description: Docker CE Repository
+#    baseurl: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
+#    gpgcheck: yes
+#    gpgkey: https://download.docker.com/linux/rhel/gpg
+#    enabled: yes
 
 #- name: Clean YUM cache
 #  ansible.builtin.shell: yum clean all
@@ -61,35 +61,35 @@
 #  ansible.builtin.shell: yum makecache
 #  become: true
 
-- name: Install Docker Engine
-  ansible.builtin.dnf:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    state: present
-  become: true
-
-- name: Ensure Docker service is started and enabled
-  ansible.builtin.systemd:
-    name: docker
-    state: started
-    enabled: yes
-
-- name: Install required packages for Kubernetes
-  ansible.builtin.dnf:
-    name:
-      - dnf-plugins-core
-    state: present
-
-- name: Add Kubernetes repository
-  ansible.builtin.yum_repository:
-    name: kubernetes
-    description: Kubernetes Repository
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el9-x86_64
-    gpgcheck: yes
-    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
-    enabled: yes
+#- name: Install Docker Engine
+#  ansible.builtin.dnf:
+#    name:
+#      - docker-ce
+#      - docker-ce-cli
+#      - containerd.io
+#    state: present
+#  become: true
+#
+#- name: Ensure Docker service is started and enabled
+#  ansible.builtin.systemd:
+#    name: docker
+#    state: started
+#    enabled: yes
+#
+#- name: Install required packages for Kubernetes
+#  ansible.builtin.dnf:
+#    name:
+#      - dnf-plugins-core
+#    state: present
+#
+#- name: Add Kubernetes repository
+#  ansible.builtin.yum_repository:
+#    name: kubernetes
+#    description: Kubernetes Repository
+#    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el9-x86_64
+#    gpgcheck: yes
+#    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+#    enabled: yes
 
 #- name: Clean YUM cache
 #  ansible.builtin.dnf:
@@ -104,19 +104,19 @@
 #    state: latest
 #    update_cache: yes
 
-- name: Install Kubernetes components (kubelet, kubeadm, kubectl)
-  ansible.builtin.dnf:
-    name:
-      - kubelet
-      - kubeadm
-      - kubectl
-    state: present
-
-- name: Ensure kubelet service is started and enabled
-  ansible.builtin.systemd:
-    name: kubelet
-    state: started
-    enabled: yes
+#- name: Install Kubernetes components (kubelet, kubeadm, kubectl)
+#  ansible.builtin.dnf:
+#    name:
+#      - kubelet
+#      - kubeadm
+#      - kubectl
+#    state: present
+#
+#- name: Ensure kubelet service is started and enabled
+#  ansible.builtin.systemd:
+#    name: kubelet
+#    state: started
+#    enabled: yes
 
 
 #- name: Initialize Kubernetes master (only for the first node)
