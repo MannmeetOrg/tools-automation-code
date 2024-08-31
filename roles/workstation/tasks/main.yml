@@ -37,7 +37,7 @@
     state: present
 
 - name: Add Docker repository
-  ansible.builtin.dnf_repository:
+  ansible.builtin.yum_repository:
     name: docker
     description: Docker CE Repository
     baseurl: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
