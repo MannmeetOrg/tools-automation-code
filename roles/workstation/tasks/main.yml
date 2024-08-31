@@ -40,7 +40,7 @@
   ansible.builtin.dnf_repository:
     name: docker
     description: Docker CE Repository
-    baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable/
+    baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable
     gpgcheck: yes
     gpgkey: https://download.docker.com/linux/rhel/gpg
     enabled: yes
