@@ -4,6 +4,7 @@
 - name: Install Terraform
   ansible.builtin.dnf:
     name: terraform
+    become: true
     state: latest
 
 - name: Install Ansible
