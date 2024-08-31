@@ -50,14 +50,14 @@
       - dnf-plugins-core
     state: present
 
-- name: Add Kubernetes repository
-  dnf_repository:
-    name: kubernetes
-    description: Kubernetes Repository
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-    gpgcheck: yes
-    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
-    enabled: yes
+#- name: Add Kubernetes repository
+#  dnf_repository:
+#    name: kubernetes
+#    description: Kubernetes Repository
+#    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+#    gpgcheck: yes
+#    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+#    enabled: yes
 
 - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
   ansible.builtin.dnf:
