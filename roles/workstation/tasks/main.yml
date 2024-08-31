@@ -15,10 +15,12 @@
     gpgcheck: yes
     gpgkey: https://rpm.releases.hashicorp.com/gpg
 
-- name: Clean YUM/DNF cache
-  ansible.builtin.shell: |
-    dnf clean all
-    dnf makecache
+- name: Clean YUM cache
+  ansible.builtin.shell: yum clean all
+  become: true
+
+- name: Rebuild YUM cache
+  ansible.builtin.shell: yum makecache
   become: true
 
 - name: Install Terraform
@@ -51,12 +53,12 @@
     gpgkey: https://download.docker.com/linux/rhel/gpg
     enabled: yes
 
-- name: Clean DNF cache
-  ansible.builtin.shell: dnf clean all
+- name: Clean YUM cache
+  ansible.builtin.shell: yum clean all
   become: true
 
-- name: Rebuild DNF cache
-  ansible.builtin.shell: dnf makecache
+- name: Rebuild YUM cache
+  ansible.builtin.shell: yum makecache
   become: true
 
 - name: Install Docker Engine
@@ -88,6 +90,14 @@
     gpgcheck: yes
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
     enabled: yes
+
+- name: Clean YUM cache
+  ansible.builtin.shell: yum clean all
+  become: true
+
+- name: Rebuild YUM cache
+  ansible.builtin.shell: yum makecache
+  become: true
 
 - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
   ansible.builtin.dnf:
