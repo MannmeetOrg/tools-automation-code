@@ -2,7 +2,6 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt workstation
 
----
 - name: Install Terraform
   ansible.builtin.dnf:
     name: terraform
