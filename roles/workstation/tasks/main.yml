@@ -75,7 +75,7 @@
     state: present
 
 - name: Add Kubernetes repository
-  dnf_repository:
+  ansible.builtin.yum_repository:
     name: kubernetes
     description: Kubernetes Repository
     baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
