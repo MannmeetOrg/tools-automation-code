@@ -2,7 +2,7 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt workstation
 
-- name: Install Docker and Kubernetes on workstation
+- name: Install Docker and Kubernetes
   become: yes
   vars:
     kubernetes_version: "1.26.1"
