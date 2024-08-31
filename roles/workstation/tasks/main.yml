@@ -85,13 +85,12 @@
 
 - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
   ansible.builtin.dnf:
-    vars:
-      kubernetes_version: "1.26.1"
     name:
       - kubelet
       - kubeadm
       - kubectl
     state: present
+  become: true
 
 - name: Ensure kubelet service is started and enabled
   systemd:
