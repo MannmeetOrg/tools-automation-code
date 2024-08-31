@@ -91,18 +91,18 @@
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
     enabled: yes
 
-- name: Clean YUM cache
-  ansible.builtin.dnf:
-    name: '*'
-    state: latest
-    update_cache: yes
-    validate_certs: yes
-
-- name: Rebuild YUM cache
-  ansible.builtin.dnf:
-    name: '*'
-    state: latest
-    update_cache: yes
+#- name: Clean YUM cache
+#  ansible.builtin.dnf:
+#    name: '*'
+#    state: latest
+#    update_cache: yes
+#    validate_certs: yes
+#
+#- name: Rebuild YUM cache
+#  ansible.builtin.dnf:
+#    name: '*'
+#    state: latest
+#    update_cache: yes
 
 - name: Install Kubernetes components (kubelet, kubeadm, kubectl)
   ansible.builtin.dnf:
