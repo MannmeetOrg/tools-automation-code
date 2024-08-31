@@ -2,10 +2,16 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt workstation
 
-- name: Install Docker and Kubernetes
+- name: Install Terraform
+  ansible.builtin.dnf:
+    name: terraform
+    state: latest
+
+- name: Install Ansible
+  ansible.builtin.shell: pip-3.11 install ansible
+
+- name: Install Docker
   become: yes
-  vars:
-    kubernetes_version: "1.26.1"
   tasks:
     - name: Update system packages
       dnf:
@@ -41,6 +47,11 @@
         state: started
         enabled: yes
 
+- name: Install Kubernetes
+  become: yes
+  vars:
+    kubernetes_version: "1.26.1"
+  tasks:
     - name: Install required packages for Kubernetes
       dnf:
         name:
@@ -94,10 +105,3 @@
 #    when: inventory_hostname in groups['worker']
 
 
-- name: Install Terraform
-  ansible.builtin.dnf:
-    name: terraform
-    state: latest
-
-- name: Install Ansible
-  ansible.builtin.shell: pip-3.11 install ansible
