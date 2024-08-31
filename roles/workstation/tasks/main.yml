@@ -90,24 +90,24 @@
     state: started
     enabled: yes
 
-- name: Initialize Kubernetes master (only for the first node)
-  command: kubeadm init --kubernetes-version={{ kubernetes_version }}
-  when: inventory_hostname in groups['master']
-  register: init_result
-  changed_when: "'kubeadm init' in init_result.stdout"
-
-- name: Set up kubeconfig for the user (only for the first node)
-  become_user: "{{ ansible_user }}"
-  command: |
-    mkdir -p /home/{{ ansible_user }}/.kube
-    cp /etc/kubernetes/admin.conf /home/{{ ansible_user }}/.kube/config
-    chown {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/.kube/config
-  when: inventory_hostname in groups['master']
-
-- name: Install CNI plugins (only for the first node)
-  become_user: "{{ ansible_user }}"
-  command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-  when: inventory_hostname in groups['master']
+#- name: Initialize Kubernetes master (only for the first node)
+#  command: kubeadm init --kubernetes-version={{ kubernetes_version }}
+#  when: inventory_hostname in groups['master']
+#  register: init_result
+#  changed_when: "'kubeadm init' in init_result.stdout"
+#
+#- name: Set up kubeconfig for the user (only for the first node)
+#  become_user: "{{ ansible_user }}"
+#  command: |
+#    mkdir -p /home/{{ ansible_user }}/.kube
+#    cp /etc/kubernetes/admin.conf /home/{{ ansible_user }}/.kube/config
+#    chown {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/.kube/config
+#  when: inventory_hostname in groups['master']
+#
+#- name: Install CNI plugins (only for the first node)
+#  become_user: "{{ ansible_user }}"
+#  command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+#  when: inventory_hostname in groups['master']
 
 #  - name: Join worker nodes to the Kubernetes cluster
 #    command: kubeadm join {{ hostvars[groups['master'][0]]['ansible_default_ipv4']['address'] }}:6443 --token {{ hostvars[groups['master'][0]]['kubeadm_token'] }} --discovery-token-ca-cert-hash sha256:{{ hostvars[groups['master'][0]]['ca_cert_hash'] }}
