@@ -2,6 +2,7 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt workstation
 
+---
 - name: Install Terraform
   ansible.builtin.dnf:
     name: terraform
@@ -14,18 +15,18 @@
   become: yes
   tasks:
     - name: Update system packages
-      dnf:
+      ansible.builtin.dnf:
         name: '*'
         state: latest
 
     - name: Install required packages for Docker
-      dnf:
+      ansible.builtin.dnf:
         name:
           - dnf-plugins-core
         state: present
 
     - name: Add Docker repository
-      dnf_repository:
+      ansible.builtin.dnf_repository:
         name: docker
         description: Docker CE Repository
         baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable/
@@ -34,7 +35,7 @@
         enabled: yes
 
     - name: Install Docker Engine
-      dnf:
+      ansible.builtin.dnf:
         name:
           - docker-ce
           - docker-ce-cli
@@ -42,7 +43,7 @@
         state: present
 
     - name: Ensure Docker service is started and enabled
-      systemd:
+      ansible.builtin.systemd:
         name: docker
         state: started
         enabled: yes
