@@ -40,10 +40,18 @@
   ansible.builtin.dnf_repository:
     name: docker
     description: Docker CE Repository
-    baseurl: https://download.docker.com/linux/rhel/9/x86_64/stable
+    baseurl: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
     gpgcheck: yes
     gpgkey: https://download.docker.com/linux/rhel/gpg
     enabled: yes
+
+- name: Clean DNF cache
+  ansible.builtin.shell: dnf clean all
+  become: true
+
+- name: Rebuild DNF cache
+  ansible.builtin.shell: dnf makecache
+  become: true
 
 - name: Install Docker Engine
   ansible.builtin.dnf:
@@ -52,6 +60,7 @@
       - docker-ce-cli
       - containerd.io
     state: present
+  become: true
 
 - name: Ensure Docker service is started and enabled
   ansible.builtin.systemd:
