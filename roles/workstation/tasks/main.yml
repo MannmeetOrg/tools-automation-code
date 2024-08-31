@@ -4,8 +4,8 @@
 - name: Install Terraform
   ansible.builtin.dnf:
     name: terraform
-    become: true
     state: latest
+  become: true
 
 - name: Install Ansible
   ansible.builtin.shell: pip-3.11 install ansible
