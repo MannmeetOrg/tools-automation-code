@@ -15,13 +15,13 @@
     gpgcheck: yes
     gpgkey: https://rpm.releases.hashicorp.com/gpg
 
-#- name: Clean YUM cache
-#  ansible.builtin.shell: yum clean all
-#  become: true
-#
-#- name: Rebuild YUM cache
-#  ansible.builtin.shell: yum makecache
-#  become: true
+- name: Clean YUM cache
+  ansible.builtin.shell: yum clean all
+  become: true
+
+- name: Rebuild YUM cache
+  ansible.builtin.shell: yum makecache
+  become: true
 
 - name: Install Terraform
   ansible.builtin.dnf:
