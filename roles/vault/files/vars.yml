@@ -1,1 +1,0 @@
-token_github: "{{ lookup('github_org', 'secrets.token_github') }}"
