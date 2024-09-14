@@ -24,7 +24,7 @@ variable "tools" {
 }
 
 variable "hosted_zone_id" {
-  default = "Z09000053CJWX9M5OOWSV"
+  default = "Z070326013UBTG0W5AFBE"
 }
 
 # variable "AWS_ACCESS_KEY_ID" {}
