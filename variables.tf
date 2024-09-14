@@ -26,9 +26,7 @@ variable "tools" {
 variable "hosted_zone_id" {
   default = "Z09000053CJWX9M5OOWSV"
 }
-variable "vpc_id" {
-  default = {}
-}
+
 # variable "AWS_ACCESS_KEY_ID" {}
 # variable "AWS_SECRET_ACCESS_KEY" {}
 
