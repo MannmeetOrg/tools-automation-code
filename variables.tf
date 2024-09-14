@@ -1,13 +1,13 @@
 variable "tools" {
   default = {
     github_runner = {
-      instance_type = "t3.small"
+      instance_type = "t2.small"
       policy_name   = ["AdministratorAccess"]
       ports          = {}
       volume_size    = 20
     }
     vault = {
-      instance_type = "t3.small"
+      instance_type = "t2.small"
       policy_name   = []
       ports          = {
         vault = 8200
