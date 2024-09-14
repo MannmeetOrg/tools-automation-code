@@ -6,14 +6,14 @@ variable "tools" {
       ports          = {}
       volume_size    = 20
     }
-    vault = {
-      instance_type = "t2.micro"
-      policy_name   = []
-      ports          = {
-        vault = 8200
-      }
-      volume_size    = 20
-    }
+#     vault = {
+#       instance_type = "t2.micro"
+#       policy_name   = []
+#       ports          = {
+#         vault = 8200
+#       }
+#       volume_size    = 20
+#     }
 #     workstation = {
 #       instance_type = "t3.small"
 #       policy_name   = []
