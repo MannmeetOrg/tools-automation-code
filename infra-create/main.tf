@@ -8,7 +8,7 @@ resource "aws_route53_record" "public_record" {
   zone_id = var.hosted_zone_id
   name    = var.name
   type    = "A"
-  ttl     = 300
+  ttl     = 10
   records = [aws_instance.tool.public_ip]
 }
 resource "aws_route53_record" "private_record" {
