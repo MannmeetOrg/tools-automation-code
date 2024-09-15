@@ -13,7 +13,7 @@ resource "aws_route53_record" "public_record" {
 }
 resource "aws_route53_record" "private_record" {
   zone_id = var.hosted_zone_id
-  name    = var.name
+  name    = "${var.name}-internal"
   type    = "A"
   ttl     = 10
   records = [aws_instance.tool.private_ip]
