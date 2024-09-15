@@ -7,7 +7,7 @@ variable "tools" {
       volume_size    = 20
     }
     vault = {
-      instance_type = "t2.micro"
+      instance_type = "t3.small"
       policy_name   = []
       ports          = {
         vault = 8200
