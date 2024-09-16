@@ -48,15 +48,15 @@
   register: runner_status
   become_user: ec2-user
 
+- name: output
+  ansible.builtin.shell: echo "runner_count.stdout = " {{ runner_count.stdout }} " runner_status.stdout = " {{ runner_status.stdout }}
+
 - name: Configure Github Runner
   ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name ec2 --labels rhel --work _work --replace
   args:
     chdir: /actions-runner
   become_user: grunner
   when: runner_count.stdout == "0" or runner_status.stdout == "offline"
-
-- name: output
-  ansible.builtin.shell: echo "runner_count.stdout = " {{ runner_count.stdout }} " runner_status.stdout = " {{ runner_status.stdout }}
 
 - name: Update the path file
   ansible.builtin.copy:
