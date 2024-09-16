@@ -31,6 +31,11 @@
   register: token
   become_user: ec2-user
 
+- name: Install Libicu dependencies
+  ansible.builtin.dnf:
+    name: libicu
+    state: latest
+
 - name: Configure Github Runner
   ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name GRunner --labels rhel --work _work --replace
   args:
