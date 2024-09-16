@@ -40,14 +40,12 @@
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/MannmeetOrg/actions/runners | jq .total_count |xargs
   register: runner_count
-  echo: runner_count
   become_user: ec2-user
 
 - name: Get the runner status
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/MannmeetOrg/actions/runners | jq '.runners[] | select(.name == "ec2") | .status' |xargs
   register: runner_status
-  echo: runner_status
   become_user: ec2-user
 
 - name: Configure Github Runner
@@ -56,6 +54,9 @@
     chdir: /actions-runner
   become_user: grunner
   when: runner_count.stdout == "0" or runner_status.stdout == "offline"
+
+- name: output
+  ansible.builtin.shell: echo "runner_count.stdout = " {{ runner_count.stdout }} " runner_status.stdout = " {{ runner_status.stdout }}
 
 - name: Update the path file
   ansible.builtin.copy:
