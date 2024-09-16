@@ -48,10 +48,6 @@
   register: runner_status
   become_user: ec2-user
 
-- name: output
-  ansible.builtin.debug:
-    msg:  runner_count =  {{ runner_count }}  runner_status =  {{ runner_status }}
-
 - name: Configure Github Runner
   ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name ec2 --labels rhel --work _work --replace
   args:
