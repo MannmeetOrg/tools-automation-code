@@ -37,7 +37,7 @@
     state: latest
 
 - name: Configure Github Runner
-  ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name GRunner --labels rhel --work _work --replace
+  ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name grunner --labels rhel --work _work --replace
   args:
     chdir: /actions-runner
   become_user: grunner
