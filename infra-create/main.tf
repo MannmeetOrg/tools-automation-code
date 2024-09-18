@@ -11,7 +11,6 @@ resource "aws_instance" "tool" {
       spot_instance_type = "persistent"
     }
   }
-
 }
 resource "aws_route53_record" "public_record" {
   zone_id = var.hosted_zone_id
