@@ -4,11 +4,3 @@ data "aws_ami" "rhel9" {
   owners = ["973714476881"]
 }
 
-# data "terraform_remote_state" "remotetf" {
-#   backend = "s3"
-#   config = {
-#     bucket = "tool-infra-create"
-#     key    = "remotetf/terraform.tfstate"
-#     region = "us-east-1"
-#   }
-# }
