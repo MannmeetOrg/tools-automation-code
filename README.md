@@ -8,7 +8,8 @@ This code is written in terraform, ansible.
 
 "Destroy.yaml" is used to Destroy all created Infrastructure via terraform.
 
-Before the creation of Github runner there are few manual steps that you need to follow.
+Before the creation of Github runner there are few manual steps that you need to follow. 
+
 Note: You could run step 1 and step 2 via user data configuration at launch but step 3 still need manual intervention to add the code to link your github account.
 
 Step1: sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo 
