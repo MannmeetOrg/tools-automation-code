@@ -1,4 +1,4 @@
-name: Provision Hashicorp Vault
+name: Provision Github-Runner
 on: [workflow_dispatch]
 jobs:
   Provision:
