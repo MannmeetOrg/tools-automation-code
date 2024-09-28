@@ -1,7 +1,7 @@
 name: Provision Hashicorp Vault
 on: [workflow_dispatch]
 jobs:
-  Provision:
+  Vault:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
