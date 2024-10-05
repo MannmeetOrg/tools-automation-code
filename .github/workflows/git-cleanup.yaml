@@ -1,6 +1,6 @@
 name: Cleanup Github Runner
-
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'  # Runs daily at midnight
 
