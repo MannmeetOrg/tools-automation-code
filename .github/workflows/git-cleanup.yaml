@@ -1,4 +1,4 @@
-name: Cleanup Runner
+name: Cleanup Github Runner
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   cleanup:
-    runs-on: ubuntu-latest  # or the OS your runner uses
+    runs-on: self-hosted  # or the OS your runner uses
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
