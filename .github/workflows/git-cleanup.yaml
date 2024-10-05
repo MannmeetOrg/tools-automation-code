@@ -1,0 +1,23 @@
+name: Cleanup Runner
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest  # or the OS your runner uses
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cleanup old files
+        run: |
+          # Remove temporary files older than 7 days
+          find $HOME/actions-runner/_work/_update -type f -mtime +7 -exec rm -f {} \;
+          
+          # Remove empty directories
+          find $HOME/actions-runner/_work/_update -type d -empty -exec rmdir {} \;
+
+      - name: Check Disk Usage
+        run: df -h
