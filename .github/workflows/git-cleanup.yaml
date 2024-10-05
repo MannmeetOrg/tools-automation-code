@@ -14,10 +14,10 @@ jobs:
       - name: Cleanup old files
         run: |
           # Remove temporary files older than 7 days
-          find /actions-runner/_work/_update -type f -mtime +7 -exec rm -f {} \;
+          find /actions-runner/_work/ -type f -mtime +7 -exec rm -f {} \;
           
           # Remove empty directories
-          find /actions-runner/_work/_update -type d -empty -exec rmdir {} \;
+          find /actions-runner/_work/ -type d -empty -exec rmdir {} \;
 
       - name: Check Disk Usage
         run: df -h
