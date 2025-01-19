@@ -19,4 +19,4 @@
     name: vault
     state: restarted
     enabled: yes
-    become_user: mannmeet
+
