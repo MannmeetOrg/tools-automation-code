@@ -3,8 +3,8 @@
 # sudo dnf install gh -y
 # gh auth login -s admin:org
 
-- name: Setup Prompt
-  ansible.builtin.shell: set-prompt github-runner
+#- name: Setup Prompt
+#  ansible.builtin.shell: set-prompt github-runner
 
 - name: Add Github Runner User
   ansible.builtin.user:
