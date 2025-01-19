@@ -29,7 +29,8 @@
   ansible.builtin.shell: |
     gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/MannmeetOrg/actions/runners/registration-token | jq .token
   register: token
-  become_user: ec2-user # Token can be fetched by ec2-user as gh login was done by that user.
+  #become_user: ec2-user # Token can be fetched by ec2-user as gh login was done by that user.
+  become_user: mannmeet
 
 - name: Install libicu dependency
   ansible.builtin.dnf:
@@ -40,13 +41,13 @@
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/MannmeetOrg/actions/runners | jq .total_count |xargs
   register: runner_count
-  become_user: ec2-user
+  become_user: mannmeet
 
 - name: Get the runner status
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/MannmeetOrg/actions/runners | jq '.runners[] | select(.name == "ec2") | .status' |xargs
   register: runner_status
-  become_user: ec2-user
+  become_user: mannmeet
 
 - name: Configure Github Runner
   ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name ec2 --labels rhel --work _work --replace
