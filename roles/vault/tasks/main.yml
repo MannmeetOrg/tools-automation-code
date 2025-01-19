@@ -10,15 +10,16 @@
     mode: '0644'
 
 - name: Install Vault
+  become: true
   ansible.builtin.dnf:
     name: vault
     state: latest
-    become: yes
+
 
 - name: Start Vault Service
+  become: true
   ansible.builtin.systemd_service:
     name: vault
     state: restarted
     enabled: yes
-    become: yes
 
