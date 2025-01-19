@@ -6,17 +6,18 @@
   ansible.builtin.get_url:
     url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     dest: /etc/yum.repos.d/hashicorp.repo
-    become_user: mannmeet
+    become: yes
 
 - name: Install Vault
   ansible.builtin.dnf:
     name: vault
     state: latest
-    become_user: mannmeet
+    become: yes
 
 - name: Start Vault Service
   ansible.builtin.systemd_service:
     name: vault
     state: restarted
     enabled: yes
+    become: yes
 
