@@ -1,6 +1,6 @@
 ---
-#- name: Setup Prompt
-#  ansible.builtin.shell: set-prompt vault
+- name: Setup Prompt
+  ansible.builtin.shell: set-prompt vault
 
 - name: Download Vault repo file
 #  become: true
