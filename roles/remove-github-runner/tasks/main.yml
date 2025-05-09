@@ -1,49 +1,42 @@
----
-- name: Remove Github Runner
-  hosts: localhost
-  become: yes
-  tasks:
+- name: Get GitHub registration token for removal
+  ansible.builtin.shell: |
+    gh api --method POST -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    /orgs/MannmeetOrg/actions/runners/remove-token | jq -r .token
+  register: remove_token
+  become_user: mannmeet
 
-    - name: Get GitHub registration token for removal
-      ansible.builtin.shell: |
-        gh api --method POST -H "Accept: application/vnd.github+json" \
-        -H "X-GitHub-Api-Version: 2022-11-28" \
-        /orgs/MannmeetOrg/actions/runners/remove-token | jq -r .token
-      register: remove_token
-      become_user: mannmeet
+- name: Remove Runner from GitHub
+  ansible.builtin.shell: |
+    ./config.sh remove --token {{ remove_token.stdout }}
+  args:
+    chdir: /actions-runner
+  become_user: grunner
+  ignore_errors: yes
 
-    - name: Remove Runner from GitHub
-      ansible.builtin.shell: |
-        ./config.sh remove --token {{ token.stdout }}
-      args:
-        chdir: /actions-runner
-      become_user: grunner
-      ignore_errors: yes
+- name: Stop Runner Service
+  ansible.builtin.shell: |
+    ./svc.sh stop || true
+  args:
+    chdir: /actions-runner
+  become_user: grunner
+  ignore_errors: yes
 
-    - name: Stop Runner Service
-      ansible.builtin.shell: |
-        ./svc.sh stop || true
-      args:
-        chdir: /actions-runner
-      become_user: grunner
-      ignore_errors: yes
+- name: Uninstall Runner Service
+  ansible.builtin.shell: |
+    ./svc.sh uninstall || true
+  args:
+    chdir: /actions-runner
+  become_user: grunner
+  ignore_errors: yes
 
-    - name: Uninstall Runner Service
-      ansible.builtin.shell: |
-        ./svc.sh uninstall || true
-      args:
-        chdir: /actions-runner
-      become_user: grunner
-      ignore_errors: yes
+- name: Delete the /actions-runner directory
+  ansible.builtin.file:
+    path: /actions-runner
+    state: absent
 
-    - name: Delete the /actions-runner directory
-      ansible.builtin.file:
-        path: /actions-runner
-        state: absent
-
-    - name: Remove the runner user (optional)
-      ansible.builtin.user:
-        name: grunner
-        state: absent
-        remove: yes  # Also removes home directory
-      when: "'grunner' in lookup('ansible.builtin.passwd')"
+- name: Remove the runner user (optional)
+  ansible.builtin.user:
+    name: grunner
+    state: absent
+    remove: yes
