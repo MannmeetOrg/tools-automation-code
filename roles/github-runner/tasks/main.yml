@@ -49,6 +49,12 @@
   register: runner_status
   become_user: mannmeet
 
+- name: Remove existing runner config (if any)
+  shell: ./config.sh remove
+  args:
+    chdir: /actions-runner
+  ignore_errors: yes
+
 - name: Configure Github Runner
   ansible.builtin.shell: ./config.sh --url https://github.com/MannmeetOrg --token {{ token.stdout }} --runnergroup Default --name ec2 --labels rhel --work _work --replace
   args:
